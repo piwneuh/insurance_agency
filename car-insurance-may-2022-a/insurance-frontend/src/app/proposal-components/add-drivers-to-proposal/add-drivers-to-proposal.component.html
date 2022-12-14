@@ -1,0 +1,68 @@
+<div *ngIf="!completed" class="flex flex-col p-2 gap-2">
+  <div class="flex flex-col md:inline-flex md:flex-row gap-2">
+    <div
+      class="form-group self-center w-full gap-2 text-center"
+      *ngIf="subscriberChecked === false"
+    >
+      <label class="mb-2 text-[1.25rem]">Add subscriber as driver?</label>
+      <div class="flex flex-row gap-2 justify-center w-full">
+        <button type="submit" class="button" (click)="addSubscriber(true)">
+          Yes
+        </button>
+        <button type="submit" class="button" (click)="addSubscriber(false)">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="subscriberChecked">
+    <ngb-accordion [destroyOnHide]="false">
+      <ngb-panel title="Driver" *ngFor="let driver of drivers; let i = index">
+        <ng-template ngbPanelContent>
+          <div class="flex flex-col gap-2">
+            <app-add-driver [props]="getProps(driver)"></app-add-driver>
+            <button
+              type="button"
+              class="button w-100"
+              (click)="removeDriver(i)"
+              [disabled]="completed"
+              *ngIf="!completed"
+            >
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </div>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+  <div *ngIf="subscriberChecked" class="flex flex-row gap-2">
+    <button
+      type="submit"
+      *ngIf="drivers.length < 4 && !completed"
+      class="button"
+      (click)="addNewDriver()"
+    >
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </button>
+    <button
+      type="submit"
+      class="button"
+      (click)="addDriversToProposal()"
+      *ngIf="!completed"
+    >
+      Add drivers
+    </button>
+  </div>
+</div>
+
+<div *ngIf="completed">
+  <div *ngFor="let driver of proposal.drivers">
+    <ngb-accordion [destroyOnHide]="false">
+      <ngb-panel [title]="driver.firstName + ' ' + driver.lastName">
+        <ng-template ngbPanelContent>
+          <app-driver-view [driver]="driver"></app-driver-view>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>

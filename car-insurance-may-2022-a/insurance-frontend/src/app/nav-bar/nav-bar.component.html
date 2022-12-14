@@ -1,0 +1,19 @@
+<div class="w-full h-[100px] !bg-indigo-600 text-white flex items-center shadow-sm">
+  <div class="row ms-auto" style="padding-right: 3rem">
+    <div class="col">
+      <div ngbDropdown class="inline-block">
+        <div class="hover:cursor-pointer" id="dropdownBasic1" ngbDropdownToggle>
+          <span class="text-xl">{{ currentUser.username }}</span>
+          <button type="button" class="bg-transparent border-none float-right"></button>
+        </div>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="shadow-md">
+          <div class="absolute top-[-6px] right-[10px] w-[12px] h-[12px] bg-white rotate-45">
+          </div>
+          <button ngbDropdownItem class="active:bg-gray-900" (click)="logout()">
+            Log out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

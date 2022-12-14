@@ -1,0 +1,54 @@
+<app-nav-bar class="w-screen"></app-nav-bar>
+<div class="flex h-full">
+  <div class="flex flex-col h-full !bg-secondary justify-center w-max">
+    <ul ngbNav #nav="ngbNav" orientation="vertical" class="w-full">
+      <li ngbNavItem="new-proposal" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faFileCirclePlus"></fa-icon><span class="hidden sm:block">New proposal</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <app-proposal-page></app-proposal-page>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="all" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faFile"></fa-icon><span class="hidden sm:block"> All Proposals</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <div class="md:p-5 p-4 md:max-w-[50%] ml-auto mr-auto">
+              <app-proposal-list></app-proposal-list>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="search" class="w-full">
+        <div class="px-2">
+          <a
+            ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900"
+          >
+            <fa-icon [icon]="faFileCricleQuestion"></fa-icon
+            ><span class="hidden sm:block"> Search Proposals</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <div class="md:p-5 p-4 md:max-w-[50%] ml-auto mr-auto">
+              <app-search-proposal></app-search-proposal>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+  <div [ngbNavOutlet]="nav" class="outlet"></div>
+</div>

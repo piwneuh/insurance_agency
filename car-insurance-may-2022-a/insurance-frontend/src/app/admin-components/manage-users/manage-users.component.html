@@ -1,0 +1,108 @@
+<div class="container flex flex-col p-2 gap-2">
+  <div class="scroll scroll-style">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Role</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ user.username }}</td>
+          <td>{{ user.role.name.substring(5, user.role.name.length) }}</td>
+          <td>
+            <button type="submit" class="button" (click)="openUpdate(edit, user)">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </td>
+          <td>
+            <button type="submit" class="button" (click)="openDelete(delete, user)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex">
+    <button class="button" (click)="openCreate(add)">
+      Add new user
+    </button>
+  </div>
+</div>
+
+<ng-template #add let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Add new user</h2>
+    <button type="button" class="button" aria-label="Close" (click)="modal.close()">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <div class="form-group">
+      <label>Username</label>
+      <input class="form-control" type="text" [(ngModel)]="userToCreate.username" />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input class="form-control" type="text" [(ngModel)]="userToCreate.email" />
+    </div>
+    <label>Role</label>
+    <select [(ngModel)]="userToCreate.role" class="form-control">
+      <option *ngFor="let role of roles" [ngValue]="role">
+        {{ role.name.substring(5, role.name.length) }}
+      </option>
+    </select>
+    <div class="flex">
+      <button type="button" class="button" (click)="create(modal)">
+        Ok
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #edit let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Edit user</h2>
+    <button type="button" class="button" aria-label="Close" (click)="modal.close()">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <div class="form-group">
+      <label>Username</label>
+      <input class="form-control" type="text" [(ngModel)]="userToUpdate.username" />
+    </div>
+    <div class="form-group mb-3">
+      <label>Email</label>
+      <input class="form-control" type="text" [(ngModel)]="userToUpdate.email" />
+    </div>
+    <label>Role</label>
+    <select [(ngModel)]="userToUpdate.role" class="form-control">
+      <option *ngFor="let role of roles" [ngValue]="role">
+        {{ role.name.substring(5, role.name.length) }}
+      </option>
+    </select>
+    <div class="flex">
+      <button type="button" class="button" (click)="update(modal)">
+        Ok
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #delete let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Delete user</h2>
+    <button type="button" class="button" aria-label="Close" (click)="modal.close()">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <h4 class="modal-title">
+      Are you sure u want to delete {{ userToDelete.username }}
+    </h4>
+    <div class="flex">
+      <button type="button" class="button" (click)="deleteUser(modal)">
+        Yes
+      </button>
+    </div>
+  </div>
+</ng-template>

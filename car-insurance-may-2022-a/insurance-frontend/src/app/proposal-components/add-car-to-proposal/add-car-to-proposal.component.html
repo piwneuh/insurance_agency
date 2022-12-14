@@ -1,0 +1,40 @@
+<div *ngIf="!completed" class="flex flex-col p-2 gap-2">
+
+  <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+    <div class="form-group w-full">
+      <label>Select brand</label>
+      <select [(ngModel)]="selectedBrand" (change)="getModels()" class="form-control" [disabled]="completed">
+        <option *ngFor="let brand of brands" [ngValue]="brand">{{ brand.name }}</option>
+      </select>
+    </div>
+    <div class="form-group w-full">
+      <label>Select model</label>
+      <select [(ngModel)]="car.model" class="form-control" [disabled]="completed">
+        <option *ngIf="!selectedBrand" disabled selected>Select brand first</option>
+        <option *ngFor="let model of models" [ngValue]="model">{{ model.name }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+    <div class="form-group w-full">
+      <label>Select model year</label>
+      <select [(ngModel)]="car.year" class="form-control" [disabled]="completed">
+        <option *ngIf="!car.model" disabled selected>Select model first</option>
+        <option *ngFor="let year of car.model.years" [ngValue]="year">{{ year }}</option>
+      </select>
+    </div>
+    <div class="form-group w-full">
+      <label>License plate number</label>
+      <input [(ngModel)]="car.licenceNum" class="form-control" placeholder="BG0000AA" [disabled]="completed" />
+    </div>
+  </div>
+
+  <div class="flex flex-row">
+    <button type="submit" class="button" (click)="addCar()" *ngIf="!completed">
+      Add car
+    </button>
+  </div>
+</div>
+
+<app-car-view *ngIf="completed" [car]="proposal.car"></app-car-view>

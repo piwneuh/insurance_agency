@@ -1,0 +1,61 @@
+<div class="flex flex-col p-2 gap-2">
+  <div>
+    <ngb-accordion [destroyOnHide]="false" *ngIf="proposal.subscriber">
+      <ngb-panel title="Subscriber">
+        <ng-template ngbPanelContent>
+          <app-subscriber-view [subscriber]="proposal.subscriber"></app-subscriber-view>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+    <ngb-accordion [destroyOnHide]="false" *ngIf="proposal.car">
+      <ngb-panel title="Car">
+        <ng-template ngbPanelContent>
+          <app-car-view [car]="proposal.car"></app-car-view>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+    <ngb-accordion [destroyOnHide]="false" *ngIf="proposal.drivers">
+      <ngb-panel title="Drivers">
+        <ng-template ngbPanelContent>
+          <div *ngFor="let driver of proposal.drivers">
+            <ngb-accordion [destroyOnHide]="false">
+              <ngb-panel [title]="driver.firstName + ' ' + driver.lastName">
+                <ng-template ngbPanelContent>
+                  <app-driver-view [driver]="driver"></app-driver-view>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </div>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+    <ngb-accordion [destroyOnHide]="false" *ngIf="proposal.insurancePlan">
+      <ngb-panel title="Insurance plan">
+        <ng-template ngbPanelContent>
+          <app-insurance-plan-view [insurancePlan]="proposal.insurancePlan" [insuranceItems]="proposal.insuranceItems"
+            [franchises]="proposal.franchises"></app-insurance-plan-view>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+    <ngb-accordion [destroyOnHide]="false" *ngIf="proposal.policy">
+      <ngb-panel title="Policy">
+        <ng-template ngbPanelContent>
+          <app-policy-view [policy]="proposal.policy"></app-policy-view>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+  <div class="flex"><button *ngIf="!proposal.isValid" type="button" class="button" (click)="validate()">
+      Validate
+    </button>
+  </div>
+  <div class="inline-flex flex-row justify-between items-center" *ngIf="proposal.amount">
+    <h2 class="!m-0 w-max">Total amount:</h2>
+    <h2 class="!m-0">${{ proposal.amount.toFixed(2) }}</h2>
+  </div>
+  <div class="flex">
+    <button *ngIf="proposal.isValid" type="button" class="button" (click)="generateReport()">
+      Generate report
+    </button>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div *ngIf="!completed" class="flex flex-col p-2 gap-2">
+  <div class="form-group">
+    <label>Payment mode</label>
+    <select [(ngModel)]="policy.payment.paymentMode" class="form-control" (change)="resetPayment()"
+      [disabled]="completed">
+      <option *ngFor="let mode of paymentModesResponse.paymentModes" [ngValue]="mode">
+        {{ mode.name }}
+      </option>
+    </select>
+  </div>
+  <div *ngIf="policy.payment.paymentMode?.name === 'cheque'">
+    <app-cheque-payment (paymentEvent)="addPayment($event)" [completed]="completed"></app-cheque-payment>
+  </div>
+  <div *ngIf="policy.payment.paymentMode?.name === 'card'">
+    <app-card-payment (paymentEvent)="addPayment($event)" [cardTypes]="paymentModesResponse.cardTypes"
+      [completed]="completed"></app-card-payment>
+  </div>
+  <div *ngIf="policy.payment.paymentMode?.name === 'bank'">
+    <app-bank-payment (paymentEvent)="addPayment($event)" [completed]="completed"></app-bank-payment>
+  </div>
+
+  <div class="flex">
+    <button type="button" class="button" (click)="addPolicy()" *ngIf="!completed">
+      Add policy
+    </button>
+  </div>
+</div>
+
+<app-policy-view *ngIf="completed" [policy]="proposal.policy">
+</app-policy-view>

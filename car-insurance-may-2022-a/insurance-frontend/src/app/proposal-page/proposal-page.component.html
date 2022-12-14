@@ -1,0 +1,120 @@
+<mat-stepper orientation="horizontal" [linear]="true">
+  <mat-step [completed]="!!proposal?.subscriber">
+    <ng-template matStepLabel><span class="hidden md:block text-ellipsis overflow-hidden">Subscriber</span>
+    </ng-template>
+    <ng-template matStepContent>
+      <div class="content">
+        <app-add-subscriber-to-proposal *ngIf="checkedIfExists" (completedEvent)="subscriberAdded($event)"
+          [proposal]="proposal">
+        </app-add-subscriber-to-proposal>
+      </div>
+      <div class="inline-flex flex-row gap-2 w-full">
+        <button class="button ml-auto" matStepperNext *ngIf="proposal?.subscriber">
+          <fa-icon [icon]="faAngleRight"></fa-icon>
+        </button>
+      </div>
+    </ng-template>
+  </mat-step>
+  <mat-step [completed]="!!proposal?.car">
+    <ng-template matStepLabel><span class="hidden md:block text-ellipsis overflow-hidden">Car</span></ng-template>
+    <ng-template matStepContent>
+      <div class="content">
+        <app-add-car-to-proposal *ngIf="checkedIfExists" (completedEvent)="carAdded($event)" [proposal]="proposal">
+        </app-add-car-to-proposal>
+      </div>
+      <div class="inline-flex flex-row gap-2 w-full">
+        <button class="button mr-auto" matStepperPrevious>
+          <fa-icon [icon]="faAngleLeft"></fa-icon>
+        </button>
+        <button class="button ml-auto" matStepperNext *ngIf="!!proposal?.car">
+          <fa-icon [icon]="faAngleRight"></fa-icon>
+        </button>
+      </div>
+    </ng-template>
+  </mat-step>
+  <mat-step [completed]="!!proposal?.drivers && proposal.drivers.length > 0">
+    <ng-template matStepLabel><span class="hidden md:block text-ellipsis overflow-hidden">Drivers</span></ng-template>
+    <ng-template matStepContent>
+      <div class="content">
+        <app-add-drivers-to-proposal *ngIf="checkedIfExists" (completedEvent)="driversAdded($event)"
+          [proposal]="proposal">
+        </app-add-drivers-to-proposal>
+      </div>
+      <div class="inline-flex flex-row gap-2 w-full">
+        <button class="button mr-auto" matStepperPrevious>
+          <fa-icon [icon]="faAngleLeft"></fa-icon>
+        </button>
+        <button class="button ml-auto" matStepperNext *ngIf="proposal?.drivers && proposal.drivers.length > 0">
+          <fa-icon [icon]="faAngleRight"></fa-icon>
+        </button>
+      </div>
+    </ng-template>
+  </mat-step>
+  <mat-step [completed]="!!proposal?.insurancePlan">
+    <ng-template matStepLabel><span class="hidden md:block text-ellipsis overflow-hidden">Insurance plan</span>
+    </ng-template>
+    <ng-template matStepContent>
+      <div class="content">
+        <app-add-insurance-plan-to-proposal *ngIf="checkedIfExists" (completedEvent)="insurancePlanAdded($event)"
+          [proposal]="proposal">
+        </app-add-insurance-plan-to-proposal>
+      </div>
+      <div class="inline-flex flex-row gap-2 w-full">
+        <button class="button mr-auto" matStepperPrevious>
+          <fa-icon [icon]="faAngleLeft"></fa-icon>
+        </button>
+        <button class="button ml-auto" matStepperNext *ngIf="!!proposal?.insurancePlan">
+          <fa-icon [icon]="faAngleRight"></fa-icon>
+        </button>
+      </div>
+    </ng-template>
+  </mat-step>
+  <mat-step [completed]="!!proposal?.policy">
+    <ng-template matStepLabel><span class="hidden md:block text-ellipsis overflow-hidden">Policy</span></ng-template>
+    <ng-template matStepContent>
+      <div class="content">
+        <app-add-policy-to-proposal *ngIf="proposal" (completedEvent)="policyAdded($event)" [proposal]="proposal">
+        </app-add-policy-to-proposal>
+      </div>
+      <div class="inline-flex flex-row gap-2 w-full">
+        <button class="button mr-auto" matStepperPrevious>
+          <fa-icon [icon]="faAngleLeft"></fa-icon>
+        </button>
+        <button class="button ml-auto" matStepperNext *ngIf="!!proposal?.policy">
+          <fa-icon [icon]="faAngleRight"></fa-icon>
+        </button>
+      </div>
+    </ng-template>
+  </mat-step>
+  <mat-step [completed]="proposal?.isValid">
+    <ng-template matStepLabel><span class="hidden md:block text-ellipsis overflow-hidden">Overview</span></ng-template>
+    <ng-template matStepContent>
+      <div class="content scroll scroll-style" *ngIf="proposal">
+        <app-proposal-view (completedEvent)="validated($event)" *ngIf="proposal" [proposal]="proposal">
+        </app-proposal-view>
+      </div>
+      <div>
+        <button class="button arrow" matStepperPrevious>
+          <fa-icon [icon]="faAngleLeft"></fa-icon>
+        </button>
+      </div>
+    </ng-template>
+  </mat-step>
+</mat-stepper>
+
+<ng-template #refresh let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Continue where you left off?</h2>
+    <button type="button" class="button" aria-label="Close" (click)="refreshProposal(modal)">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <div class="flex">
+      <button type="button" class="button mr-5" (click)="loadProposal(modal)">
+        Yes
+      </button>
+      <button type="button bg-indigo-600" class="button" (click)="refreshProposal(modal)">
+        Create new
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,179 @@
+<div class="flex flex-col p-2 gap-2">
+  <div class="form-group w-full">
+    <label>JMBG</label>
+    <input [value]="driver.jmbg" class="form-control" type="number" disabled />
+  </div>
+
+  <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+    <div class="form-group w-full">
+      <label>Name</label>
+      <input
+        [value]="driver.firstName"
+        class="form-control"
+        type="text"
+        disabled
+      />
+    </div>
+    <div class="form-group w-full">
+      <label>Surname</label>
+      <input
+        [value]="driver.lastName"
+        class="form-control"
+        type="text"
+        disabled
+      />
+    </div>
+  </div>
+
+  <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+    <div class="form-group w-full">
+      <label>Gender</label>
+      <input
+        [value]="driver.gender | titlecase"
+        class="form-control"
+        type="text"
+        disabled
+      />
+    </div>
+    <div class="form-group w-full">
+      <label>Marital status</label>
+      <input
+        [value]="driver.maritalStatus | titlecase"
+        class="form-control"
+        type="text"
+        disabled
+      />
+    </div>
+  </div>
+
+  <div class="form-group w-full">
+    <label>Date of birth</label>
+    <input
+      [value]="driver.birth | slice: 0:-6"
+      class="form-control"
+      type="text"
+      disabled
+    />
+  </div>
+
+  <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+    <div class="form-group w-full">
+      <label>Country</label>
+      <input
+        type="text"
+        [value]="driver.address.city.country.name"
+        class="form-control"
+        disabled
+      />
+    </div>
+    <div class="form-group w-full">
+      <label>City</label>
+      <input
+        [value]="driver.address.city.name"
+        class="form-control"
+        type="text"
+        disabled
+      />
+    </div>
+  </div>
+
+  <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+    <div class="form-group w-full">
+      <label>Street</label>
+      <input
+        [value]="driver.address.street"
+        class="form-control"
+        type="text"
+        disabled
+      />
+    </div>
+    <div class="form-group w-full w-30">
+      <label>Street Number</label>
+      <input
+        [value]="driver.address.streetNumber"
+        class="form-control"
+        type="text"
+        disabled
+      />
+    </div>
+  </div>
+
+  <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+    <div class="form-group w-full">
+      <label>Home phone</label>
+      <input
+        [value]="driver.contact.homePhone"
+        class="form-control"
+        type="number"
+        disabled
+      />
+    </div>
+    <div class="form-group w-full">
+      <label>Mobile phone</label>
+      <input
+        [value]="driver.contact.mobilePhone"
+        class="form-control"
+        type="number"
+        disabled
+      />
+    </div>
+  </div>
+
+  <div class="form-group w-full">
+    <label>Email</label>
+    <input [value]="driver.contact.email" class="form-control" disabled />
+  </div>
+
+  <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+    <div class="form-group w-full">
+      <label>License number</label>
+      <input [value]="driver.licenceNum" class="form-control" disabled />
+    </div>
+    <div class="form-group w-full">
+      <label>License obtained</label>
+      <input
+        [value]="driver.licenceObtained | slice: 0:-6"
+        class="form-control"
+        disabled
+      />
+    </div>
+  </div>
+
+  <div class="form-group w-full">
+    <label>Years insured</label>
+    <input [value]="driver.yearsInsured" class="form-control" disabled />
+  </div>
+
+  <div class="form-group w-full">
+    <label>Risks</label>
+    <mat-chip-list aria-label="risks">
+      <mat-chip *ngFor="let risk of driver.risks" class="!bg-indigo-600 text-white">{{
+        risk.description
+      }}</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="form-group w-full">
+    <label>Accident histories</label>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Responsible</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let accident of driver.accidentHistories; let i = index">
+          <td>{{ accident.happened.slice(0, -6) }}</td>
+          <td>{{ accident.wasResponsible ? 'Yes' : 'No' }}</td>
+          <td>
+            <textarea class="form-control" disabled>{{
+              accident.description
+            }}</textarea>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

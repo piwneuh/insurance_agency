@@ -1,0 +1,104 @@
+<div class="container flex flex-col p-2 gap-2">
+  <h1 class="!m-0">Select country</h1>
+  <select [(ngModel)]="selectedCountry" class="form-control" (change)="handleCountryChange()">
+    <option *ngFor="let country of countries" [ngValue]="country">
+      {{ country.name }}
+    </option>
+  </select>
+  <div *ngIf="selectedCountry" class="scroll scroll-style">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let city of cities; let i = index">
+          <td>{{ city.name }}</td>
+          <td>
+            <button type="submit" class="button" (click)="openUpdate(edit, city)">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </td>
+          <td>
+            <button type="submit" class="button" (click)="openDelete(delete, city)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex" *ngIf="selectedCountry">
+    <button class="button" [disabled]="selectedCountry == undefined" (click)="openCreate(add)">
+      Add new city
+    </button>
+  </div>
+</div>
+
+<ng-template #add let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Add new city</h2>
+    <button type="button" class="button" aria-label="Close" (click)="modal.close()">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+      <div class="form-group w-full">
+        <label>Name</label>
+        <input class="form-control" type="text" [(ngModel)]="cityToCreate.name" />
+      </div>
+      <div class="form-group w-full">
+        <label>ZIP code</label>
+        <input class="form-control" type="text" [(ngModel)]="cityToCreate.zipcode" />
+      </div>
+    </div>
+    <div class="flex">
+      <button type="button" class="button" (click)="create(modal)">
+        Ok
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #edit let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Edit city</h2>
+    <button type="button" class="button" aria-label="Close" (click)="modal.close()">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+      <div class="form-group w-full">
+        <label>City name</label>
+        <input class="form-control" type="text" [(ngModel)]="cityToUpdate.name" />
+      </div>
+      <div class="form-group w-full">
+        <label>City Zip Code</label>
+        <input class="form-control" type="text" [(ngModel)]="cityToUpdate.zipcode" />
+      </div>
+    </div>
+    <div class="flex">
+      <button type="button" class="button" (click)="update(modal)">
+        Ok
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #delete let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Delete city</h2>
+    <button type="button" class="button" aria-label="Close" (click)="modal.close()">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <h4 class="modal-title !m-0">
+      Are you sure u want to delete {{ cityToDelete.name }}
+    </h4>
+    <div class="flex">
+      <button type="button" class="button" (click)="deleteCity(modal)">
+        Yes
+      </button>
+    </div>
+  </div>
+</ng-template>

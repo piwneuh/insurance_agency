@@ -1,0 +1,110 @@
+<div class="container flex flex-col p-2 gap-2">
+  <div class="scroll scroll-style">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Optional</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let insuranceItem of insuranceItems; let i = index">
+          <td>{{ insuranceItem.name }}</td>
+          <td>{{ insuranceItem.isOptional ? 'Yes' : 'No' }}</td>
+          <td>{{ insuranceItem.amount }}</td>
+          <td>
+            <button type="submit" class="button" (click)="openUpdate(edit, insuranceItem)">
+              <fa-icon [icon]="faEdit"></fa-icon>
+            </button>
+          </td>
+          <td>
+            <button type="submit" class="button" (click)="openDelete(delete, insuranceItem)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex">
+    <button class="button" (click)="openCreate(add)">
+      Add new insurance item
+    </button>
+  </div>
+</div>
+
+<ng-template #add let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Add new insurance item</h2>
+    <button type="button" class="button" aria-label="Close" (click)="modal.close()">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <div class="form-group">
+      <label>Insurance item name</label>
+      <input class="form-control" type="text" [(ngModel)]="insuranceItemToCreate.name" />
+    </div>
+    <div class="form-group mb-3">
+      <label>Amount</label>
+      <input class="form-control" type="number" [(ngModel)]="insuranceItemToCreate.amount" />
+    </div>
+    <div class="form-group">
+      <label>Optional</label>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="insuranceItemToCreate.isOptional" />
+      </div>
+    </div>
+    <div class="flex">
+      <button type="button" class="button" (click)="create(modal)">
+        Ok
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #edit let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Edit insurance item</h2>
+    <button type="button" class="button" aria-label="Close" (click)="modal.close()">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <div class="form-group">
+      <label>Brand name</label>
+      <input class="form-control" type="text" [(ngModel)]="insuranceItemToUpdate.name" />
+    </div>
+    <div class="form-group">
+      <label>Amount</label>
+      <input class="form-control" type="number" [(ngModel)]="insuranceItemToUpdate.amount" />
+    </div>
+    <div class="form-group">
+      <label>Optional</label>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="insuranceItemToUpdate.isOptional" />
+      </div>
+    </div>
+    <div class="flex">
+      <button type="button" class="button" (click)="update(modal)">
+        Ok
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #delete let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title !m-0" id="modal-basic-title">Delete insurance item</h2>
+    <button type="button" class="button" aria-label="Close" (click)="modal.close()">X</button>
+  </div>
+  <div class="flex flex-col p-2 gap-2">
+    <h4 class="modal-title">
+      Are you sure u want to delete {{ insuranceItemToDelete.name }}
+    </h4>
+    <div class="flex">
+      <button type="button" class="button" (click)="deleteInsuranceItem(modal)">
+        Yes
+      </button>
+    </div>
+  </div>
+</ng-template>

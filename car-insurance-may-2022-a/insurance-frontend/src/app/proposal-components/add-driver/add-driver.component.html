@@ -1,0 +1,403 @@
+<div class="flex flex-col gap-2">
+  <div class="form-group w-full">
+    <label>JMBG</label>
+    <input
+      [(ngModel)]="props.driver.jmbg"
+      class="form-control"
+      type="number"
+      [disabled]="known || props.completed"
+    />
+  </div>
+
+  <div *ngIf="checked" class="flex flex-col gap-2">
+    <div class="flex flex-col md:inline-flex md:flex-row w-full gap-2">
+      <div class="form-group w-full">
+        <label>Name</label>
+        <input
+          [(ngModel)]="props.driver.firstName"
+          class="form-control"
+          type="text"
+          name="nameInput"
+          [disabled]="known || props.completed"
+        />
+      </div>
+      <div class="form-group w-full">
+        <label>Surname</label>
+        <input
+          [(ngModel)]="props.driver.lastName"
+          class="form-control"
+          type="text"
+          [disabled]="known || props.completed"
+        />
+      </div>
+    </div>
+
+    <div
+      *ngIf="checked"
+      class="flex flex-col md:inline-flex md:flex-row w-full gap-2"
+    >
+      <div class="form-group w-full">
+        <label>Gender</label>
+        <select
+          [(ngModel)]="props.driver.gender"
+          class="form-control"
+          [disabled]="known || props.completed"
+        >
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </div>
+      <div class="form-group w-full">
+        <label>Marital status</label>
+        <select
+          [(ngModel)]="props.driver.maritalStatus"
+          class="form-control"
+          [disabled]="known || props.completed"
+        >
+          <option value="SINGLE">Single</option>
+          <option value="MARRIED">Married</option>
+          <option value="DIVORCED">Divorced</option>
+          <option value="WIDOWED">Widowed</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="!known" class="form-group w-full">
+      <label>Date of birth</label>
+      <div class="input-group">
+        <input
+          class="form-control"
+          placeholder="yyyy-mm-dd"
+          (dateSelect)="birthSelected($event)"
+          ngbDatepicker
+          #d="ngbDatepicker"
+          [disabled]="known || props.completed"
+          [maxDate]="maxDateBirth"
+        />
+        <button
+          class="btn btn-outline-secondary calendar"
+          (click)="d.toggle()"
+          type="button"
+          [disabled]="known || props.completed"
+        >
+          <fa-icon [icon]="faCalendar"></fa-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="known" class="form-group w-full">
+      <label>Date of birth</label>
+      <input
+        [value]="props.driver.birth | slice: 0:-6"
+        class="form-control"
+        type="text"
+        disabled
+      />
+    </div>
+
+    <div
+      *ngIf="checked"
+      class="flex flex-col md:inline-flex md:flex-row w-full gap-2"
+    >
+      <div *ngIf="!known" class="form-group w-full">
+        <label>Country</label>
+        <select
+          [(ngModel)]="selectedCountry"
+          (change)="getCities()"
+          class="form-control"
+          [disabled]="known"
+        >
+          <option *ngFor="let country of props.countries" [ngValue]="country">
+            {{ country.name }}
+          </option>
+        </select>
+      </div>
+      <div *ngIf="known" class="form-group w-full">
+        <label>Country</label>
+        <input
+          type="text"
+          [value]="props.driver.address.city.country.name"
+          class="form-control"
+          disabled
+        />
+      </div>
+      <div class="form-group w-full">
+        <label>City</label>
+        <select
+          [(ngModel)]="props.driver.address.city.id"
+          class="form-control"
+          [disabled]="known || props.completed"
+        >
+          <option *ngIf="!selectedCountry" disabled selected>
+            Select country first
+          </option>
+          <option *ngFor="let city of cities" [ngValue]="city.id">
+            {{ city.name }}
+          </option>
+          <option *ngIf="known" [ngValue]="props.driver.address.city.id">
+            {{ props.driver.address.city.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div
+      *ngIf="checked"
+      class="flex flex-col md:inline-flex md:flex-row w-full gap-2"
+    >
+      <div class="form-group w-full">
+        <label>Street</label>
+        <input
+          [(ngModel)]="props.driver.address.street"
+          class="form-control"
+          type="text"
+          [disabled]="known || props.completed"
+        />
+      </div>
+      <div class="form-group w-full w-30">
+        <label>Street number</label>
+        <input
+          [(ngModel)]="props.driver.address.streetNumber"
+          class="form-control"
+          type="text"
+          [disabled]="known || props.completed"
+        />
+      </div>
+    </div>
+
+    <div
+      *ngIf="checked"
+      class="flex flex-col md:inline-flex md:flex-row w-full gap-2"
+    >
+      <div class="form-group w-full">
+        <label>Home phone</label>
+        <input
+          [(ngModel)]="props.driver.contact.homePhone"
+          class="form-control"
+          type="number"
+          [disabled]="known || props.completed"
+        />
+      </div>
+      <div class="form-group w-full">
+        <label>Mobile phone</label>
+        <input
+          [(ngModel)]="props.driver.contact.mobilePhone"
+          class="form-control"
+          type="number"
+          [disabled]="known || props.completed"
+        />
+      </div>
+    </div>
+
+    <div class="form-group w-full">
+      <label>Email</label>
+      <input
+        [(ngModel)]="props.driver.contact.email"
+        class="form-control"
+        type="email"
+        [disabled]="known || props.completed"
+      />
+    </div>
+
+    <div
+      *ngIf="checked"
+      class="flex flex-col md:inline-flex md:flex-row w-full gap-2"
+    >
+      <div class="form-group w-full">
+        <label>License number</label>
+        <input
+          [(ngModel)]="props.driver.licenceNum"
+          class="form-control"
+          type="email"
+          [disabled]="(known && !isSubscriber) || props.completed"
+        />
+      </div>
+      <div *ngIf="!known || isSubscriber" class="form-group w-full">
+        <label>Licence obtained</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            placeholder="yyyy-mm-dd"
+            (dateSelect)="licenceObtainedSelected($event)"
+            ngbDatepicker
+            #l="ngbDatepicker"
+            [disabled]="(known && !isSubscriber) || props.completed"
+          />
+          <button
+            class="btn btn-outline-secondary calendar"
+            (click)="l.toggle()"
+            type="button"
+            [disabled]="(known && !isSubscriber) || props.completed"
+          >
+            <fa-icon [icon]="faCalendar"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="known && !isSubscriber" class="form-group w-full">
+        <label>License obtained</label>
+        <input
+          [value]="props.driver.licenceObtained | slice: 0:-6"
+          class="form-control"
+          disabled
+        />
+      </div>
+    </div>
+
+    <div class="form-group w-full">
+      <label>Years insured</label>
+      <input
+        [(ngModel)]="props.driver.yearsInsured"
+        class="form-control"
+        type="number"
+        [disabled]="(known && !isSubscriber) || props.completed"
+      />
+    </div>
+  </div>
+  <button
+    type="submit"
+    class="button"
+    (click)="checkDriverJmbg()"
+    *ngIf="!checked"
+  >
+    Check
+  </button>
+
+  <button class="button" *ngIf="checked" (click)="open(content)">
+    Manage risks and accidents
+  </button>
+</div>
+
+<ng-template #content let-modal>
+  <div class="inline-flex modal-header !py-2 items-center">
+    <h2 class="modal-title flex items-center !m-0" id="modal-basic-title">
+      Risks
+    </h2>
+    <button
+      type="button"
+      class="button"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      X
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let r of props.risks">
+      <input
+        type="checkbox"
+        id="{{ r.id }}"
+        [checked]="isRiskChecked(r)"
+        (change)="addRisk($event, r)"
+        [disabled]="isRiskDisabled(r) || props.completed"
+        autocomplete="off"
+      />
+      <label style="margin-left: 10px">{{ r.description }}</label>
+    </div>
+  </div>
+
+  <div class="modal-header !pb-0 items-center">
+    <h2 class="modal-title" id="modal-basic-title">Accident History</h2>
+  </div>
+
+  <div class="flex flex-col p-2 gap-2">
+    <div
+      *ngIf="checked"
+      class="flex flex-col md:inline-flex md:flex-row w-full gap-2"
+    >
+      <div class="form-group w-full">
+        <label>Date happened</label>
+        <div class="input-group">
+          <input
+            #datePicker
+            class="form-control"
+            placeholder="yyyy-mm-dd"
+            (dateSelect)="happenedSelected($event)"
+            ngbDatepicker
+            #d="ngbDatepicker"
+            [disabled]="props.completed"
+            [maxDate]="maxDateAccident"
+          />
+          <button
+            class="btn btn-outline-secondary calendar"
+            (click)="d.toggle()"
+            type="button"
+          >
+            <fa-icon [icon]="faCalendar"></fa-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group w-full">
+        <label>Was responsible</label>
+        <select
+          [(ngModel)]="accident.wasResponsible"
+          class="form-control"
+          [disabled]="props.completed"
+        >
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group w-full">
+      <label>Description</label>
+      <textarea
+        [(ngModel)]="accident.description"
+        class="form-control"
+        [disabled]="props.completed"
+      ></textarea>
+    </div>
+
+    <div class="flex">
+      <button
+        type="submit"
+        class="button"
+        (click)="addAccident()"
+        [disabled]="props.completed"
+      >
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </button>
+    </div>
+
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Responsible</th>
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let accident of props.driver.accidentHistories; let i = index"
+        >
+          <td>{{ accident.happened.slice(0, -6) }}</td>
+          <td>{{ accident.wasResponsible ? 'Yes' : 'No' }}</td>
+          <td>
+            <textarea class="form-control" disabled>{{
+              accident.description
+            }}</textarea>
+          </td>
+          <td>
+            <button
+              type="submit"
+              class="btn-dark btn-lg"
+              *ngIf="!accident.id && !props.completed"
+              (click)="removeAccident(i)"
+              [disabled]="props.completed"
+            >
+              <fa-icon [icon]="faTrash"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="flex">
+      <button type="button" class="button" (click)="modal.close('Save click')">
+        Ok
+      </button>
+    </div>
+  </div>
+</ng-template>

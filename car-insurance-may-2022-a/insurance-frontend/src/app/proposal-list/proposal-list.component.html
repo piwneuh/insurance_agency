@@ -1,0 +1,40 @@
+<div class="w-100 flex flex-col gap-2">
+  <div class="flex flex-col gap-2">
+    <div class="inline-flex w-full">
+      <input class="w-full" (keyup)="onKey($event)" class="form-control" placeholder="Search by any column"/>
+      <button class="w-[50px] h-full button !rounded-l-none hover: bg-white text-black" [disabled]="true">
+        <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+      </button>
+    </div>
+    <div class="scroll scroll-style">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Serial num</th>
+            <th scope="col">Subscriber Name</th>
+            <th scope="col">Subscriber JMBG</th>
+            <th scope="col">Created at</th>
+            <th scope="col">Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let proposal of proposals; let i = index">
+            <td>{{ proposal.id }}</td>
+            <td>{{ proposal.subscriber.firstName + ' ' + proposal.subscriber.lastName}}</td>
+            <td>{{ proposal.subscriber.jmbg }}</td>
+            <td>{{ proposal.creationDate }}</td>
+            <td>
+              <button type="submit" class="button" *ngIf="currentProposal != proposal.id" (click)="setActive(proposal.id)">
+                <fa-icon [icon]="faFileCheck"></fa-icon>
+              </button>
+              <button type="submit" class="button !bg-indigo-600 !text-white" *ngIf="currentProposal == proposal.id"
+                (click)="setActive(proposal.id)">
+                <fa-icon [icon]="faFileCheck"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

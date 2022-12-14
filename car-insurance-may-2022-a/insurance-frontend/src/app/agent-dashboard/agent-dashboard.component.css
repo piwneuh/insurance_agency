@@ -1,0 +1,23 @@
+.outlet {
+  width: 100%;
+  height: 100%;
+}
+
+.nav-item {
+  width: 100%;
+  transition-property: all;
+  transition-duration: 100ms;
+}
+
+.active {
+  @apply bg-indigo-600 text-white;
+}
+
+.content {
+  max-height: calc(100vh - 335px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}

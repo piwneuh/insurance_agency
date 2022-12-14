@@ -1,0 +1,112 @@
+<app-nav-bar class="w-screen"></app-nav-bar>
+<div class="flex h-full">
+  <div class="flex flex-col h-full !bg-gray-800 justify-center w-max">
+    <ul ngbNav #nav="ngbNav" orientation="vertical" class="w-full">
+      <li ngbNavItem="countries" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faEarthEurope"></fa-icon><span class="hidden sm:block">Countries</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <app-manage-countries></app-manage-countries>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="cities" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faCity"></fa-icon><span class="hidden sm:block">Cities</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <app-manage-cities></app-manage-cities>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="brands" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faCar"></fa-icon><span class="hidden sm:block">Car brands</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <app-manage-brands></app-manage-brands>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="models" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faEarthEurope"></fa-icon><span class="hidden sm:block">Car models</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <app-manage-models></app-manage-models>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="insurance-plans" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faShieldHalved"></fa-icon><span class="hidden sm:block">Insurance plans</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <app-manage-insurance-plans></app-manage-insurance-plans>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="insurance-items" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faFileShield"></fa-icon><span class="hidden sm:block">Insurance items</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <app-manage-insurance-items></app-manage-insurance-items>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="risks" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faTriangleExclamation"></fa-icon><span class="hidden sm:block">Driver risks</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <app-manage-risks></app-manage-risks>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem="users" class="w-full">
+        <div class="px-2">
+          <a ngbNavLink
+            class="!inline-flex gap-2 whitespace-nowrap text-gray-400 w-full text-2xl sm:text-xl justify-center sm:justify-start rounded-md transition-all duration-100 hover:bg-slate-900">
+            <fa-icon [icon]="faUserGroup"></fa-icon><span class="hidden sm:block">Users</span>
+          </a>
+        </div>
+        <ng-template ngbNavContent>
+          <div class="md:m-10">
+            <app-manage-users></app-manage-users>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+  <div [ngbNavOutlet]="nav" class="outlet"></div>
+</div>

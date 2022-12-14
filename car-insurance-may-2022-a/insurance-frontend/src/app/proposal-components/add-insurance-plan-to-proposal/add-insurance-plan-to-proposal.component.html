@@ -1,0 +1,129 @@
+<div *ngIf="!completed" class="flex flex-col p-2 gap-2">
+  <div class="form-group">
+    <label>Insurance plan</label>
+    <select
+      [(ngModel)]="insurance.insurancePlan"
+      (change)="insurancePlanChanged()"
+      class="form-control"
+    >
+      <option *ngFor="let plan of insurancePlans" [ngValue]="plan">
+        <div>{{ plan.name }}</div>
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="selectedInsurancePlan">
+    <div *ngIf="selectedInsurancePlan.isPremium" class="form-groub">
+      <mat-chip-list>
+        <mat-chip class="!bg-indigo-600 text-white">Premium</mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <div *ngIf="!selectedInsurancePlan.isPremium" class="form-groub">
+      <mat-chip-list>
+        <mat-chip class="!bg-indigo-600 text-white">Basic</mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+
+  <label *ngIf="selected">Non-optional items</label>
+  <table class="table" *ngIf="selected">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let mandatoryItem of mandatoryItems">
+        <td>{{ mandatoryItem.name }}</td>
+        <td>${{ mandatoryItem.amount }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="optionalItems.length > 0">
+    <label *ngIf="selected">Optional items</label>
+    <table class="table" *ngIf="selected">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Amount</th>
+          <th scope="col">%</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let optionalItem of optionalItems; let i = index">
+          <td>{{ optionalItem.name }}</td>
+          <td>${{ optionalItem.amount }}</td>
+          <td>
+            <input
+              class="form-control"
+              style="width: 50px"
+              type="number"
+              [(ngModel)]="percentages[i]"
+              [disabled]="completed"
+            />
+          </td>
+          <td>
+            <button
+              class="button"
+              (click)="addFranchise(optionalItem, percentages[i])"
+              *ngIf="!completed"
+            >
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <label *ngIf="franchises.length > 0">Franchises</label>
+  <table class="table" *ngIf="franchises.length > 0">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">%</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let franchise of franchises; let i = index">
+        <td>{{ franchise.insuranceItem.name }}</td>
+        <td>{{ franchise.insuranceItem.amount }}</td>
+        <td>{{ franchise.percentage }}%</td>
+        <td>
+          ${{ (franchise.insuranceItem.amount * franchise.percentage) / 100 }}
+        </td>
+        <td>
+          <button class="button" (click)="removeFranchise(franchise)">
+            <fa-icon [icon]="faTrash"></fa-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex">
+    <button
+      type="submit"
+      class="button"
+      (click)="addInsuranceToProposal()"
+      *ngIf="!completed && insurance.insurancePlan"
+    >
+      Add insurance
+    </button>
+  </div>
+</div>
+
+<app-insurance-plan-view
+  *ngIf="completed"
+  [insurancePlan]="proposal.insurancePlan"
+  [insuranceItems]="proposal.insuranceItems"
+  [franchises]="proposal.franchises"
+></app-insurance-plan-view>

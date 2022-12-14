@@ -1,0 +1,15 @@
+.content {
+  max-height: calc(100vh - 335px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+::ng-deep .mat-step-header .mat-step-icon {
+  @apply bg-gray-900 text-white;
+}
+::ng-deep .mat-step-header .mat-step-icon-selected {
+  @apply bg-indigo-600 text-white;
+}

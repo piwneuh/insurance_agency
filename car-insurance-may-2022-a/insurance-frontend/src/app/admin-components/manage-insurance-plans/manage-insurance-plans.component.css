@@ -1,0 +1,11 @@
+.optional {
+  color: orange;
+}
+
+::ng-deep span.selected-item {
+  @apply !bg-indigo-600;
+}
+
+::ng-deep div::before {
+  @apply !bg-indigo-600 !border-indigo-600;
+}

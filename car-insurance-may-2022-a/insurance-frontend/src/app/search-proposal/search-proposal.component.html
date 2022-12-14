@@ -1,0 +1,22 @@
+<div class="w-100 flex flex-col gap-2">
+  <div class="flex flex-col">
+    <label>Search by Serial number</label>
+    <div class="inline-flex w-full">
+      <input
+        class="w-full"
+        [(ngModel)]="proposalIdInput"
+        type="number"
+        class="form-control"
+        (keyup)="searchEnter($event)"
+      /><button
+        class="w-[50px] h-full button !rounded-l-none"
+        (click)="search()"
+      >
+        <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="proposal" class="scroll scroll-style">
+    <app-proposal-view [proposal]="proposal"></app-proposal-view>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.search-button {
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  border-left-style: none;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  width: 50px;
+  background-color: #212529;
+  color: white;
+  transition-property: all;
+  transition-duration: 100ms;
+}
+
+.search-button:hover {
+  background-color: #fae600;
+  color: black;
+}

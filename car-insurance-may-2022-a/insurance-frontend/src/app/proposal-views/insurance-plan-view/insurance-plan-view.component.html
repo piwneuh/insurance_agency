@@ -1,0 +1,67 @@
+<div class="flex flex-col p-2 gap-2">
+  <div class="form-group">
+    <label>Name</label>
+    <div class="form-group">
+      <input
+        [value]="insurancePlan.name"
+        class="form-control"
+        type="text"
+        disabled
+      />
+    </div>
+  </div>
+
+  <div *ngIf="insurancePlan.isPremium" class="form-groub">
+    <mat-chip-list>
+      <mat-chip class="!bg-indigo-600 text-white">Premium</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div *ngIf="!insurancePlan.isPremium" class="form-group">
+    <mat-chip-list>
+      <mat-chip class="!bg-indigo-600 text-white">Basic</mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="form-group">
+    <label>Insurance items</label>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let insuranceItem of insuranceItems">
+          <td>{{ insuranceItem.name }}</td>
+          <td>${{ insuranceItem.amount }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="form-group" *ngIf="franchises.length != 0">
+    <label>Franchises</label>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Amount</th>
+          <th scope="col">%</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let franchise of franchises">
+          <td>{{ franchise.insuranceItem.name }}</td>
+          <td>${{ franchise.insuranceItem.amount }}</td>
+          <td>{{ franchise.percentage }}</td>
+          <td>
+            ${{ (franchise.insuranceItem.amount * franchise.percentage) / 100 }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

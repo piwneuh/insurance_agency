@@ -1,0 +1,27 @@
+<div class="form-group mb-3">
+  <label>Payment mode</label>
+  <input
+    [value]="policy.payment.paymentMode.name"
+    class="form-control"
+    type="text"
+    disabled
+  />
+</div>
+
+<div *ngIf="policy.payment.paymentMode?.name === 'cheque'">
+  <app-cheque-payment-view
+    [payment]="policy.payment.payment"
+  ></app-cheque-payment-view>
+</div>
+
+<div *ngIf="policy.payment.paymentMode?.name === 'card'">
+  <app-card-payment-view
+    [payment]="policy.payment.payment"
+  ></app-card-payment-view>
+</div>
+
+<div *ngIf="policy.payment.paymentMode?.name === 'bank'">
+  <app-bank-payment-view
+    [payment]="policy.payment.payment"
+  ></app-bank-payment-view>
+</div>
